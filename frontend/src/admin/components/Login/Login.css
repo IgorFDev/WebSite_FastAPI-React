@@ -1,0 +1,217 @@
+/* body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.2), transparent 60%);
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 85% 70%, rgba(139, 92, 246, 0.18), transparent 55%);
+    pointer-events: none;
+} */
+
+/* карточка входа — современный стиль */
+.login-card {
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(0px);
+    border-radius: 2rem;
+    width: 100%;
+    max-width: 460px;
+    padding: 2.2rem 2rem 2.5rem;
+    box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.login-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 30px 50px -15px rgba(0, 0, 0, 0.4);
+}
+
+/* заголовок */
+.admin-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.admin-header i {
+    font-size: 2.6rem;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.6rem;
+    display: inline-block;
+}
+
+.admin-header h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    background: linear-gradient(125deg, #1e293b, #2d3a5e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-top: 0.25rem;
+}
+
+.admin-header p {
+    font-size: 0.85rem;
+    color: #5b6e8c;
+    margin-top: 0.5rem;
+    font-weight: 450;
+}
+
+/* поля формы */
+.input-group {
+    margin-bottom: 1.6rem;
+}
+
+.input-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.2px;
+}
+
+.input-group label i {
+    font-size: 0.9rem;
+    color: #4f46e5;
+    width: 1.1rem;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    font-size: 0.95rem;
+    font-family: 'Inter', monospace;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 1.2rem;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    outline: none;
+    color: #0f172a;
+    font-weight: 500;
+}
+
+.input-wrapper input:focus {
+    border-color: #2d2d2d;
+    box-shadow: 0 0 0 3px rgba(45, 45, 45, 0.2);
+    background-color: #fefefe;
+}
+
+.input-wrapper input::placeholder {
+    color: #a0afc3;
+    font-weight: 400;
+    font-size: 0.85rem;
+}
+
+/* кнопка входа */
+.login-btn {
+    width: 100%;
+    background: linear-gradient(95deg, #2d2d2d, #4a4a4a);
+    border: none;
+    padding: 0.9rem 0;
+    border-radius: 1.8rem;
+    font-weight: 700;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.3);
+    letter-spacing: 0.3px;
+}
+
+.login-btn i {
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.login-btn:hover {
+    background: linear-gradient(95deg, #3b3b3b, #6b6b6b);
+    transform: scale(1.01);
+    box-shadow: 0 10px 20px -5px rgba(45, 45, 45, 0.5);
+}
+
+.login-btn:hover i {
+    transform: translateX(3px);
+}
+
+.login-btn:active {
+    transform: scale(0.98);
+}
+
+/* дополнительный стиль — разделитель */
+.demo-hint {
+    text-align: center;
+    margin-top: 1.8rem;
+    font-size: 0.7rem;
+    color: #7c8ba0;
+    border-top: 1px solid #2d2d2d;
+    padding-top: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.demo-hint i {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* адаптивность */
+@media (max-width: 500px) {
+    .login-card {
+        padding: 1.8rem 1.5rem 2rem;
+    }
+
+    .admin-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .input-wrapper input {
+        padding: 0.8rem 1rem;
+    }
+
+    .login-btn {
+        padding: 0.8rem 0;
+    }
+}
+
+/* анимация появления */
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card {
+    animation: fadeSlide 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+}

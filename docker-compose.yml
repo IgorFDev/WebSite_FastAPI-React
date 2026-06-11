@@ -1,0 +1,22 @@
+services:       
+    db:
+        image: postgres:15
+        container_name: samurais_db
+        
+        environment:
+            POSTGRES_DB: samurais_db
+            POSTGRES_USER: samurais_user
+            POSTGRES_PASSWORD: iggoorreekk
+        
+        ports:
+            - "5433:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U samurais_user -d samurais_db"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        
+volumes:
+    pgdata:

@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #2D2D2D;
+  color: #D3D3D3;
+  font-family: 'Montserrat', sans-serif;
+}
+
+p {
+  margin: 0;
+  color: #D3D3D3;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: #FD2635;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,10 @@
+.media-field-box {
+    cursor: pointer;
+    padding: 14px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.media-field-box:hover {
+    border-color: #007bff;
+}

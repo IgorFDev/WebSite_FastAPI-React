@@ -1,0 +1,20 @@
+.players-page {
+    width: 100%;
+    padding-top: 90px;
+    min-height: 100vh;
+}
+
+.players-page h1 {
+    text-align: center;
+    font-size: 64px;
+    margin-bottom: 90px;
+}
+
+.players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    margin: 0 auto;
+    max-width: 1240px;
+}

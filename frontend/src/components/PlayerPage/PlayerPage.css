@@ -1,0 +1,161 @@
+/* плавный скролл и кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #c41e3a;
+    border-radius: 10px;
+}
+.player-page {
+    margin: 0 auto;
+}
+.player-page__content {
+    margin: 0 auto;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.player-info__background {
+    background-size: cover;
+    height: auto;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.player-info__background::before {
+    content: '';
+    position: absolute;
+    padding-top: 20px;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 77%, rgba(0,0,0,0.45) 88%, #2D2D2D 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.player-info__header {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-top: 120px;
+}
+
+.player-info__role {
+    color: #f2f2f2;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.9px;
+    margin-bottom: 8px;
+}
+
+.player-info__name {
+    color: #f2f2f2;
+    font-size: 56px;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.player-info__number {
+    color: #ffffff;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0;
+    visibility: visible;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1;
+    height: 80px;
+    width: 80px;
+    border: 3px solid #ffffff;
+    background: rgba(45, 45, 45, 0.25);
+    backdrop-filter: blur(3px);
+   
+}
+
+.player-info__card {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 0 120px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.player-info__avatar {
+    width: 375px;
+    height: 375px;
+    background-color: #D3D3D3;
+    border-radius: 45px;
+    position: relative;
+    overflow: clip;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #F2F2F2;
+}
+
+.playerpage-image {
+    width: 100%;
+    /* height: 100%; */
+    object-fit: cover;
+}
+
+.player-info__info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.player-info__block-age,
+.player-info__block-birth-date,
+.player-info__block-height,
+.player-info__block-sport-rank {
+    color: #ffffff;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0;
+    visibility: visible;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.9px;
+    height: 140px;
+    width: 180px;
+    border: 3px solid #ffffff;
+    border-radius: 20px;
+    background: rgba(45, 45, 45, 0.5);
+    backdrop-filter: blur(3px);
+    flex-direction: column;
+}
+
+.player-info__block-title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.9px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+
+.player-info__block-value {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.9px;
+    margin-bottom: auto;
+}
+

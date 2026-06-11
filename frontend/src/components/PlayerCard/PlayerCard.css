@@ -1,0 +1,89 @@
+.player-card-link {
+    text-decoration: none;
+}
+
+.player-card {
+    width: 400px;
+    height: 450px;
+    background-color: #D3D3D3;
+    border-radius: 45px;
+    position: relative;
+    overflow: clip;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #F2F2F2;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.player-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(253, 38, 53, 0.3);
+}
+
+.player-card:hover .player-info h2 {
+    color: #FD2635;
+}
+
+.player-image {
+    position: absolute;
+    height: 380px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 70px;
+    object-fit: contain;
+}
+
+.player-number {
+    position: absolute;
+    left: 25px;
+    bottom: 54px;
+    width: 50px;
+    height: 50px;
+    background-color: #7F1D1D;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F2F2F2;
+    font-size: 28px;
+    font-weight: 700;
+    border: 2px solid #F2F2F2;
+    z-index: 5;
+}
+
+.player-info {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #7F1D1D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.player-info h2 {
+    font-size: 30px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.player-card-link {
+    text-decoration: none;
+    color: #F2F2F2;
+}
+
+.player-card-link:visited {
+    color: #F2F2F2;
+}
+
+.player-card-link:hover {
+    color: #FD2635;
+}
+
+.player-card-link:active {
+    color: #F2F2F2;
+}

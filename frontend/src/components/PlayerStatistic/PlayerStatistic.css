@@ -1,0 +1,56 @@
+.player-statistics {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 80px auto;
+}
+
+.statistics-card {
+    background: rgba(65, 65, 65, 0.8);
+    border-radius: 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+    margin-top: 120px;
+}
+
+.statistics-content {
+    padding: 40px;
+}
+
+.statistics-card h2 {
+    color: #D3D3D3;
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 80px;
+}
+
+.statistics-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+    gap: 20px;
+    row-gap: 40px;
+}
+
+.statistics-grid div {
+    border-bottom: 1px solid rgba(211,211,211,1);
+    padding-bottom: 15px;
+}
+
+.statistics-grid h3 {
+    color: #D3D3D3;
+
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.statistics-grid span {
+    color: #D3D3D3;
+
+    font-size: 64px;
+    font-weight: 700;
+}
