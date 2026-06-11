@@ -4,6 +4,7 @@ __pycache__/
 backend/media/gallery
 backend/media/news
 backend/media/players
+frontend/public/images/
 .env
 node_modules/
 build/
