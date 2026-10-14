@@ -7,6 +7,23 @@ export async function getSeasons() {
     return response.json()
 }
 
+export async function getSeasonsUntilThisYear() {
+    const response = await fetch(`${API_URL}seasons-until-year/`)
+    return response.json()
+} 
+
+export async function getCurrentSeason() {
+    const response = await fetch(`${API_URL}current-season`)
+    return response.json()
+}
+
+/* export async function getSeasonByID(
+    id: number
+) {
+    const response = await fetch(`{API_URL}current-season`)
+    return response.json()
+} */
+
 export async function createSeason(
     seasonData: any
 ) {

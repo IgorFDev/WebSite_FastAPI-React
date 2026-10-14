@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import "./UniversalForm.css"
 import MediaField from "../../Forms/MediaField/MediaField"
+import Tiptap from "../../../../components/Tiptap"
+import MultiSelectField from "../../Forms/MultiSelectField/MultiSelectField"
 
 interface UniversalFormProps {
     fields: any[]
@@ -14,7 +16,7 @@ function UniversalForm({
     initialData,
     onSubmit
 }: UniversalFormProps) {
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState<any>({})
     const [errors, setErrors] = useState<Record<string, string>>({})
     
     useEffect(() => {
@@ -87,7 +89,7 @@ function UniversalForm({
             return
         }
 
-        onSubmit(formData)
+        onSubmit?.(formData)
     }
 
     return (
@@ -130,7 +132,7 @@ function UniversalForm({
                         }
                     >
 
-                        {field.options?.map((option) => (
+                        {field.options?.map((option: { value: string; label: string }) => (
 
                             <option
                                 key={option.value}
@@ -189,6 +191,18 @@ function UniversalForm({
                     />
                 )}
 
+                {field.type === "tiptap" && (
+                    <Tiptap
+                        content={formData[field.name] || ""}
+                        onChange={(content) =>
+                            handleChange(
+                                field.name,
+                                content
+                            )
+                        }
+                    />
+                )}
+
                 {field.type === "date" && (
                     <input
                         className="form-input"
@@ -231,6 +245,20 @@ function UniversalForm({
                                 e.target.checked
                             )
                         }
+                    />
+                )}
+
+                {field.type === "multiselect" && (
+                    <MultiSelectField
+                        value={formData[field.name] || []}
+                        onChange={(value) =>
+                            handleChange(
+                                field.name,
+                                value
+                            )
+                        }
+                        options={field.options || []}
+                        label={field.label}
                     />
                 )}
 

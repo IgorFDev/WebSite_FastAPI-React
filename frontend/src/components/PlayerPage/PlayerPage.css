@@ -7,7 +7,7 @@
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-    background: #c41e3a;
+    background: #e1002d;
     border-radius: 10px;
 }
 .player-page {
@@ -17,10 +17,10 @@
     margin: 0 auto;
 }
 
-.content {
+/* .content {
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 .player-info__background {
     background-size: cover;

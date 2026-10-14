@@ -18,7 +18,7 @@ async def create_tournament_team_endpoint(
     """
     return await create_tournament_team(db, tournament_team)
 
-@router.patch("/", response_model=TournamentTeamUpdate)
+@router.patch("/{tournament_team_id}", response_model=TournamentTeamUpdate)
 async def update_tournament_team_endpoint(
     db: SessionDep,
     admin: AdminDep,

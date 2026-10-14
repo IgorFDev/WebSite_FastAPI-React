@@ -1,5 +1,5 @@
 import enum
-from sqlalchemy import String, Boolean, DateTime, Text, Enum, Integer, ForeignKey, Date, UniqueConstraint
+from sqlalchemy import Table, Column, String, Boolean, DateTime, Text, Enum, Integer, ForeignKey, Date, UniqueConstraint
 from sqlalchemy.sql import func
 from db.base import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -48,6 +48,8 @@ class Season(Base):
         default=False,
         nullable=False,
     )
+    start_year: Mapped[int] = mapped_column(server_default=func.extract('year', func.now()), nullable=True)
+    end_year: Mapped[int] = mapped_column(server_default=func.extract('year', func.now()) + 1, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
@@ -94,6 +96,9 @@ class MediaAsset(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     player_avatar: Mapped["Player"] = relationship(back_populates="avatar", uselist=False, foreign_keys="[Player.avatar_media_id]")
+    club_team_emblem: Mapped["ClubTeam"] = relationship(back_populates="emblem", uselist=False, foreign_keys="[ClubTeam.emblem_media_id]")
+    club_team_preview: Mapped["ClubTeam"] = relationship(back_populates="preview", uselist=False, foreign_keys="[ClubTeam.preview_media_id]")
+    tournament_team_avatar: Mapped["TournamentTeam"] = relationship(back_populates="avatar")
     player_background: Mapped["Player"] = relationship(back_populates="background", uselist=False, foreign_keys="[Player.background_media_id]")
     news_covers: Mapped[list["News"]] = relationship(back_populates="cover")
     gallery_items: Mapped[list["PlayerGallery"]] = relationship(back_populates="media_asset")
@@ -104,14 +109,20 @@ class ClubTeam(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     slug: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    preview_media_id: Mapped[int] = mapped_column(Integer, ForeignKey("media_assets.id"), nullable=True, unique=True)
+    emblem_media_id: Mapped[int] = mapped_column(Integer, ForeignKey("media_assets.id"), nullable=True)
     league_name: Mapped[str] = mapped_column(String(255), nullable=False)
     group_name: Mapped[str] = mapped_column(String(255), nullable=False)
     results_url: Mapped[str] = mapped_column(Text, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
     
+    emblem: Mapped["MediaAsset"] = relationship(back_populates="club_team_emblem", uselist=False, lazy="selectin", foreign_keys=[emblem_media_id])
+    preview: Mapped["MediaAsset"] = relationship(back_populates="club_team_preview", uselist=False, lazy="selectin", foreign_keys=[preview_media_id])
+    standings: Mapped[list["Standings"]] = relationship(back_populates="club_team", lazy="selectin")
     players: Mapped[list["Player"]] = relationship(back_populates="club_team", lazy="selectin")
     matches: Mapped[list["Match"]] = relationship(back_populates="club_team", cascade="all, delete-orphan", lazy="selectin")
+
 
 class TournamentTeam(Base):
     __tablename__ = "tournament_teams"
@@ -121,17 +132,26 @@ class TournamentTeam(Base):
     season_id: Mapped[int] = mapped_column(
         Integer,
         ForeignKey("seasons.id"),
-        nullable=False
+        nullable=False,
+        index=True
     )
-    league_name: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
-    group_name: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
+    avatar_media_id: Mapped[int] = mapped_column(Integer, ForeignKey("media_assets.id"), nullable=True)
+    standings_id: Mapped[int] = mapped_column(Integer, ForeignKey("standings.id"), nullable=True)
+    matches_played: Mapped[int] = mapped_column(Integer, default=0, nullable=True)
+    points: Mapped[int] = mapped_column(Integer, default=0, nullable=True)
+    wins: Mapped[int] = mapped_column(Integer, default=0, nullable=True)
+    losses: Mapped[int] = mapped_column(Integer, default=0, nullable=True)
+    sets_won: Mapped[int] = mapped_column(Integer, default=0, nullable=True)
+    sets_lost: Mapped[int] = mapped_column(Integer, default=0, nullable=True)
+
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     UniqueConstraint("season_id", "name", "league_name", "group_name", name="unique_tournament_team")
 
+    avatar: Mapped["MediaAsset"] = relationship(back_populates="tournament_team_avatar", lazy="selectin")
     matches: Mapped[list["Match"]] = relationship(back_populates="opponent_team", lazy="selectin")
-    standings: Mapped[list["Standings"]] = relationship(back_populates="team")
+    standings: Mapped["Standings"] = relationship(back_populates="teams", lazy="selectin")
     season: Mapped["Season"] = relationship(back_populates="tournament_teams", lazy="selectin")
 
 
@@ -162,6 +182,20 @@ class Player(Base):
     statistics: Mapped[list["PlayerStatistic"]] = relationship(back_populates="player", cascade="all, delete-orphan", lazy="selectin")
     avatar: Mapped["MediaAsset"] = relationship(back_populates="player_avatar", uselist=False, lazy="selectin", foreign_keys=[avatar_media_id])
     background: Mapped["MediaAsset"] = relationship(back_populates="player_background", uselist=False, lazy="selectin", foreign_keys=[background_media_id])
+    achievements: Mapped[list["PlayerAchievements"]] = relationship(back_populates="player", cascade="all, delete-orphan", lazy="selectin")
+
+
+class PlayerAchievements(Base):
+    __tablename__ = "player_achievements"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    player_id: Mapped[int] = mapped_column(Integer, ForeignKey("players.id"), index=True, nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+
+    player: Mapped["Player"] = relationship(back_populates="achievements", lazy="selectin")
 
 
 class PlayerGallery(Base):
@@ -252,25 +286,25 @@ class Standings(Base):
     __tablename__ = "standings"
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    sets_won: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    sets_lost: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     season_id: Mapped[int] = mapped_column(Integer, ForeignKey("seasons.id"), index=True, nullable=False)
-    league_name: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
-    group_name: Mapped[str] = mapped_column(String(255), index=True, nullable=False)
-    team_id: Mapped[int] = mapped_column(Integer, ForeignKey("tournament_teams.id"), index=True, nullable=False)
-    position: Mapped[int] = mapped_column(Integer, nullable=False)
-    matches_played: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    points: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    wins: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    losses: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    club_team_id: Mapped[int] = mapped_column(Integer, ForeignKey("club_teams.id"), index=True, nullable=False)
+    
+    UniqueConstraint('season_id', 'club_team_id', name='unique_standings_data')
+
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
-    
-    UniqueConstraint('season_id', 'league_name', 'group_name', 'team_id', name='unique_standings')
 
-    season: Mapped["Season"] = relationship(back_populates="standings")
-    team: Mapped["TournamentTeam"] = relationship(back_populates="standings")
+    season: Mapped["Season"] = relationship(back_populates="standings", lazy="selectin")
+    teams: Mapped[list["TournamentTeam"]] = relationship(back_populates="standings", lazy="selectin")
+    club_team: Mapped["ClubTeam"] = relationship(back_populates="standings", lazy="selectin")
 
+
+news_categories = Table(
+    "news_categories",
+    Base.metadata,
+    Column("news_id", ForeignKey("news.id"), primary_key=True),
+    Column("category_id", ForeignKey("categories_news.id"), primary_key=True),
+)
 
 class News(Base):
     __tablename__ = "news"
@@ -279,9 +313,24 @@ class News(Base):
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     slug: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
+    is_pinned: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    views_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     cover_media_id: Mapped[int] = mapped_column(Integer, ForeignKey("media_assets.id"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     published_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True, nullable=True)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     cover: Mapped["MediaAsset"] = relationship(back_populates="news_covers", lazy="selectin")
+    categories: Mapped[list["CategoriesNews"]] = relationship(secondary=news_categories, back_populates="news", lazy="selectin") 
+
+
+class CategoriesNews(Base):
+    __tablename__ = "categories_news"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
+    slug: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+
+    news: Mapped[list["News"]] = relationship(secondary=news_categories, back_populates="categories", lazy="selectin")

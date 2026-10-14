@@ -1,5 +1,5 @@
 from schemas.standings import StandingsCreate, StandingsUpdate, StandingsResponse
-from models.models import Standings
+from models.models import Standings, Season, ClubTeam
 from sqlalchemy import select
 from db.session import SessionDep
 from fastapi import HTTPException, status
@@ -8,18 +8,49 @@ async def create_standings(db: SessionDep, standings: StandingsCreate) -> Standi
     """
     Создание новой турнирной таблицы
     """
+
+    season = await db.execute(
+        select(Season).where(
+            Season.id == standings.season_id
+        )
+    )
+    
+    season = season.scalar()
+    if not season:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Такого сезона нет - выберите уже из существующих или добавьте новый"
+        )
+
+    club_team = await db.execute(
+        select(ClubTeam).where(
+            ClubTeam.id == standings.club_team_id
+        )
+    )
+    
+    club_team = club_team.scalar()
+    if not club_team:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Такой команды нет - выберите из уже существующих или добавьте новую"
+        )
+
+    existing_standings = await db.execute(
+        select(Standings).where(
+            Standings.season_id == standings.season_id,
+            Standings.club_team_id == standings.club_team_id
+        )
+    )
+    
+    if existing_standings.scalar():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Таблица для этого сезона для этой команды уже существует"
+        )
+
     standings = Standings(
-        sets_won=standings.sets_won,
-        sets_lost=standings.sets_lost,
         season_id=standings.season_id,
-        league_name=standings.league_name,
-        group_name=standings.group_name,
-        team_id=standings.team_id,
-        position=standings.position,
-        matches_played=standings.matches_played,
-        points=standings.points,
-        wins=standings.wins,
-        losses=standings.losses,
+        club_team_id=standings.club_team_id,
     )
     
     db.add(standings)
@@ -34,6 +65,22 @@ async def get_standings(db: SessionDep) -> list[StandingsResponse]:
     Получение турнирной таблицы
     """
     standings = await db.execute(select(Standings).order_by(Standings.created_at.desc()))
+    standings = standings.scalars().all()
+    
+    return standings
+
+
+async def get_standings_current_season(db: SessionDep) -> list[StandingsResponse]:
+    """
+    Получение турнирных таблиц действующего сезона
+    """
+    standings = await db.execute(
+        select(Standings)
+        .join(Season)
+        .where(Season.is_current == True)
+        .order_by(Standings.created_at.desc())
+    )
+
     standings = standings.scalars().all()
     
     return standings

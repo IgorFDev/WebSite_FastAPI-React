@@ -1,5 +1,6 @@
-from schemas.news import NewsCreate, NewsResponse, NewsUpdate, NewsSingleResponse
-from models.models import News, MediaAsset
+from sqlalchemy.orm import selectinload
+from schemas.news import NewsCreate, NewsResponse, NewsUpdate, NewsSingleResponse, AddCategoriesFromNews
+from models.models import News, MediaAsset, CategoriesNews
 from sqlalchemy import select
 from db.session import SessionDep
 from fastapi import HTTPException, status
@@ -32,11 +33,22 @@ async def create_news(db: SessionDep, news: NewsCreate) -> NewsResponse:
             detail="Медиа не найдено"
         )
     
+    if news.categories is not None:
+        # если передан список (может быть пустым)
+        result = await db.execute(
+            select(CategoriesNews).where(CategoriesNews.id.in_(news.categories))
+        )
+        categories = result.scalars().all()
+        news.categories = list(categories)
+
+
+
     new_news = News(
         title=news.title,
         content=news.content,
         cover_media_id=news.cover,
-        slug=slug
+        slug=slug,
+        categories=news.categories
     )
     
     db.add(new_news)
@@ -44,6 +56,30 @@ async def create_news(db: SessionDep, news: NewsCreate) -> NewsResponse:
     await db.refresh(new_news)
     
     return new_news
+
+
+async def add_categories_from_news(db: SessionDep, news_slug: str, news_categories: AddCategoriesFromNews) -> NewsResponse:
+    
+    result = await db.execute(select(News).where(News.slug == news_slug))
+    news = result.scalar()
+    if not news:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Новость не найдена"
+        )
+    
+    if news_categories is not None:
+        # если передан список (может быть пустым)
+        result = await db.execute(
+            select(CategoriesNews).where(CategoriesNews.id.in_(news_categories.categories))
+        )
+        categories = result.scalars().all()
+        news.categories = list(categories)
+    
+    await db.commit()
+    await db.refresh(news)
+
+    return news
 
 
 async def get_news(db: SessionDep) -> list[NewsResponse]:
@@ -64,11 +100,21 @@ async def get_all_news(db: SessionDep) -> list[NewsResponse]:
 
     return news
 
-async def get_news_by_id(db: SessionDep, news_id: int) -> NewsSingleResponse:
+
+async def get_most_viewed_news(db: SessionDep) -> list[NewsResponse]:
     """
-    Получение новости по ID
+    Получение списка новостей с наибольшим количеством просмотров
     """
-    result = await db.execute(select(News).where(News.id == news_id))
+    result = await db.execute(select(News).where(News.published_at.is_not(None)).order_by(News.views_count.desc()).limit(4))
+    news = result.scalars().all()
+
+    return news
+
+async def get_news_by_slug(db: SessionDep, news_slug: str) -> NewsSingleResponse:
+    """
+    Получение новости по slug
+    """
+    result = await db.execute(select(News).where(News.slug == news_slug))
     news = result.scalar()
     if not news:
         raise HTTPException(
@@ -107,16 +153,27 @@ async def update_news(db: SessionDep, news_id: int, news_data: NewsUpdate) -> Ne
     if news_data.title is not None:
         slug = slugify(news_data.title)
 
-        slug_verify = await db.execute(select(News).where(News.slug == slug))
-        slug_verify = slug_verify.scalar()
-        if slug_verify:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Новость с таким заголовком уже существует"
-            )    
-        news.title = news_data.title
-        news.slug = slug
+        if slug != news.slug:
+
+            slug_verify = await db.execute(select(News).where(News.slug == slug))
+            slug_verify = slug_verify.scalar()
+            if slug_verify:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Новость с таким заголовком уже существует"
+                )    
+            news.title = news_data.title
+            news.slug = slug
     
+    if news_data.categories is not None:
+        # если передан список (может быть пустым)
+        result = await db.execute(
+            select(CategoriesNews).where(CategoriesNews.id.in_(news_data.categories))
+        )
+        categories = result.scalars().all()
+        news.categories = list(categories)
+
+
     if news_data.content is not None:
         news.content = news_data.content
     

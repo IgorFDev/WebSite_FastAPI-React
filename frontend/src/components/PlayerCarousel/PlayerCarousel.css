@@ -1,0 +1,152 @@
+.carousel-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+/* ================= КАРУСЕЛЬ ================= */
+.carousel {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    overflow: hidden;
+    /* 👇 вот это и даёт нам cqw-единицы внутри карточек */
+    container-type: inline-size;
+  }
+
+/* ================= КАРТОЧКА ================= */
+.card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    aspect-ratio: 3 / 2;
+    height: 85%;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #151828;
+    /* box-shadow: 0 25px 60px rgba(0, 0, 0, .6),
+                inset 0 0 0 1px rgba(255, 255, 255, .06); */
+    user-select: none;
+    will-change: transform, left, opacity, filter;
+    transition:
+      transform    .75s cubic-bezier(.22, .61, .36, 1),
+      opacity   .55s ease,
+      filter    .75s ease,
+      box-shadow.75s ease;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+  }
+
+.card img {
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+  }
+
+  /* затемнение низа + лёгкий градиент поверх фото */
+/* .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8, 10, 20, .96) 0%,
+      rgba(8, 10, 20, .70) 25%,
+      rgba(8, 10, 20, .15) 50%,
+      transparent 70%
+    );
+    pointer-events: none;
+  } */
+
+.card-info {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 20px 18px 22px;
+    z-index: 2;
+  }
+
+.card-name {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    margin-bottom: 2px;
+  }
+
+.card-role {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: #7c9cff;
+    margin-bottom: 14px;
+  }
+
+.card-stats {
+    display: flex;
+    gap: 18px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .55);
+  }
+.card-stats b {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  /* ---------- ПОЗИЦИЯ: ЦЕНТР ---------- */
+.card.pos-center {
+    transform: translate3d(-50%, 10%, 0);
+    filter: brightness(1) saturate(1);
+    z-index: 30;
+    /* box-shadow: 0 35px 80px rgba(0, 0, 0, .8),
+                inset 0 0 0 1px rgba(255, 255, 255, .12),
+                0 0 70px rgba(96, 140, 255, .28); */
+  }
+
+  /* ---------- ПОЗИЦИЯ: СЛЕВА (видно 20% правой части) ---------- */
+.card.pos-left {
+    transform: translate3d(calc(-80% - 50cqw), 0, 0);
+    filter: brightness(.42) saturate(.65);
+    z-index: 10;
+    
+    cursor: pointer;
+  }
+
+  /* ---------- ПОЗИЦИЯ: СПРАВА (видно 20% левой части) ---------- */
+.card.pos-right {
+    transform: translate3d(calc(50cqw - 20%), 0, 0);
+    filter: brightness(.42) saturate(.65);
+    z-index: 10;
+    
+    cursor: pointer;
+  }
+
+  /* ---------- СКРЫТЫЕ (за кадром) ---------- */
+.card.pos-hidden-left {
+    transform: translate3d(calc(-150% - 50cqw), 0, 0);
+    opacity: 0;
+    filter: brightness(.3);
+    z-index: 5;
+    pointer-events: none;
+  }
+.card.pos-hidden-right {
+    transform: translate3d(calc(50cqw + 50%), 0, 0);
+    opacity: 0;
+    filter: brightness(.3);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+/* адаптив */
+@media (max-width: 760px) {
+    .carousel { height: 380px; }
+    .card { width: 220px; height: 320px; }
+    .card-name { font-size: 17px; }
+}

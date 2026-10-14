@@ -15,7 +15,6 @@
 
 .modal {
     width: 100%;
-    max-width: 60rem;
     max-height: 90vh;
     background: #ffffff;
     display: flex;

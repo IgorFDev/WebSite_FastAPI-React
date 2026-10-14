@@ -1,0 +1,593 @@
+/* ============================================
+   Общий контейнер и раскладка
+   ============================================ */
+.news-page {
+    margin: 40px 40px 0 40px;
+    max-width: none;
+}
+
+
+.news-page-wrapper {
+    display: flex;
+    flex-direction: row;  
+    gap: 60px;             /* отступ между контентом и сайдбаром */
+    width: 100%;
+}
+
+/* Основной контент – 65% ширины родителя */
+.news-page-content {
+    width: 70%;
+    flex: 0 0 auto;
+}
+
+.news-page-sidebar {
+    max-width: 25%;
+    margin-left: auto;
+}
+
+/* ============================================
+   Заголовок страницы
+   ============================================ */
+.news-page-title {
+    display: flex;
+}
+
+.news-page-title h1 {
+    margin: 0 0 20px 0;
+}
+
+/* Фильтры – пока просто отступ */
+.news-page-filters {
+    margin-bottom: 30px;
+}
+
+.news-filters-wrapper {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+}
+
+.news-filter {
+    padding: 10px 20px;
+    background-color: #d3d3d3;
+    border-radius: 12px;
+
+    transition: all 0.4s ease;
+}
+
+.news-filter:hover {
+    background-color: #e0e0e0;
+    color: rgb(26, 26, 26, 1);
+    box-shadow: 0 4px 12px rgba(133, 133, 133, 0.7);
+    cursor: pointer;
+}
+
+.news-filter.active:hover {
+    background-color: #1A1A1A;
+    color: #d3d3d3;
+    box-shadow: 0 0 4px #ff3b61, 0 0 10px #ff3b61;
+}
+
+.news-filter.active {
+    background-color: #1a1a1a;
+    color: #d3d3d3;
+}
+
+.news-filter-text {
+    color: rgb(26, 26, 26, 0.9);
+
+    transition: all 0.3s ease;
+}
+
+.news-filter-text.active {
+    color: #d3d3d3;
+}
+
+
+/* ============================================
+   Стили для постов новостей
+   ============================================ */
+
+/* Базовая карточка новости – все посты используют этот класс */
+.news-post {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #3A3A3A;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    transition: box-shadow 0.3s ease;
+    border: 3px solid #858585;
+}
+
+.news-post:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Общий стиль для изображения */
+.news-post-img {
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 1.91 / 1;
+}
+
+.news-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.news-content {
+    font-size: 22px;
+    font-weight: 400;
+    padding-top: 1px;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Отобразить 2 строки */
+    overflow: hidden;
+}
+
+.news-content h2 {
+    font-size: 28px;
+}
+
+/* --------------------------------------------
+   1) КРУПНАЯ НОВОСТЬ (первая)
+   -------------------------------------------- */
+.news-post.big {
+    /* Занимает всю ширину колонки */
+    width: 100%;
+    box-sizing: border-box;
+    
+    transition: all 0.4s ease;
+}
+
+.news-post.big:hover {
+    background-color: rgb(50, 50, 50, 0.9);
+    
+    box-shadow: 0 0 15px rgba(133, 133, 133, 0.7);
+    cursor: pointer;
+}
+
+.news-post-background {
+    aspect-ratio: 3 / 2;
+}
+
+.news-post-img-big {
+    aspect-ratio: 1.91 / 1;
+    height: stretch;
+    object-fit: cover;
+    overflow: clip;
+    max-width: 100%;
+    border-radius: 12px;
+}
+
+.news-post.big .news-img {
+    height: 100%;
+}
+
+/* Контент поверх изображения (абсолютное позиционирование) */
+.news-post.big .news-post-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 60%;
+}
+
+.news-post.big .news-title {
+    font-size: 38px;
+    font-weight: 500;
+    letter-spacing: -2px;
+}
+
+.news-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 20px;
+    row-gap: 6px;
+}
+
+/* Дата в правом нижнем углу */
+.news-post.big .news-date {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(243, 243, 243,0.7);
+}
+
+/* --------------------------------------------
+   2) КОМПАКТНАЯ НОВОСТЬ (остальные)
+   -------------------------------------------- */
+.news-post.small {
+    display: flex;
+    background-color: #858585;
+    border-color: #3A3A3A;
+    flex-direction: row;
+    align-items: stretch;  /* чтобы высота была одинаковой */
+    padding: 0;            /* отступы внутри дадим через padding блоков */
+    min-height: 324px;
+    border: unset;
+    aspect-ratio: 3 / 1;
+
+    transition: all 0.4s ease;
+}
+
+.news-post.small:hover {
+    background-color: rgb(224, 224, 224, 0.9);
+    transform: scale(1.02);
+    
+    box-shadow: 0 0 15px rgba(133, 133, 133, 0.7);
+    cursor: pointer;
+}
+
+.news-post.small .news-post-img {
+    flex: 0 0 40%;         /* картинка занимает 40% ширины */
+    max-width: 40%;
+    height: auto;
+    aspect-ratio: 1 / 0.67;   /* можно задать свою пропорцию */
+    padding: 30px;
+    padding-right: unset;
+}
+
+.news-post.small .news-img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #2D2D2D;
+}
+
+/* Блок с текстом */
+.post_content_wrap {
+    flex: 1;  /* отступы, слева нет (уже есть gap) */
+    display: flex;
+    flex-direction: column;
+    padding: 40px 30px;
+}
+
+.news-post.small .news-post-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.news-post.small .news-title {
+    font-size: 30px;
+    font-weight: 500;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+    color: #1A1A1A;
+
+    /* Обрезаем длинные заголовки (если надо) */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.news-post.small .news-content {
+    color: #1A1A1A;
+    font-weight: 300;
+    overflow: hidden; /* Предотвращаем выход за границы */
+}
+
+.news-post.small .news-content h2 {
+    font-size: 22px;
+}
+
+/* Дата в правом нижнем углу блока с текстом */
+.news-post.small .news-date {
+    font-size: 18px;
+    font-weight: 300;
+    color: #1A1A1A;
+    margin-top: auto;
+    margin-left: auto;
+}
+
+/* ============================================
+   Адаптивность (для мобильных)
+   ============================================ */
+@media (max-width: 768px) {
+    .news-page-wrapper {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .news-page-content {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
+    .news-page-sidebar {
+        display: none;   /* сайдбар скрыт на мобилках */
+    }
+
+    .news-post.big {
+        aspect-ratio: auto;
+        height: auto;
+    }
+
+    .news-post.big .news-post-content {
+        position: relative;
+        background: #f8f8f8;
+        color: #222;
+        padding: 15px 20px;
+    }
+
+    .news-post.big .news-date {
+        position: static;
+        background: none;
+        backdrop-filter: none;
+        color: #666;
+        padding: 0;
+        margin-top: 8px;
+    }
+
+    .news-post.small {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .news-post.small .news-post-img {
+        flex: 0 0 100%;
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+
+    .news-post.small .news-post-content {
+        padding: 0;
+    }
+
+    .news-post.small .news-date {
+        position: static;
+        text-align: right;
+        margin-top: 8px;
+    }
+}
+
+/* ============================================
+   САЙДБАР
+   ============================================ */
+.news-page-sidebar {
+    display: block;
+}
+
+/* Общий блок в сайдбаре */
+.sidebar-block {
+    background: #858585;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.sidebar-title {
+    font-size: 26px;
+    letter-spacing: -0.97px;
+    font-weight: 700;
+    margin: 0;
+    color: #1a1a1a;
+    padding-bottom: 8px;
+}
+
+/* --- Популярные новости --- */
+.popular-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.popular-item-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.img-wrapper {
+    flex: 0 0 42%;
+    aspect-ratio: 1 / 0.67;
+    overflow: hidden;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.popular-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #D3D3D3;
+}
+
+.popular-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    overflow: clip;
+}
+
+.popular-item:last-child {
+    border-bottom: none;
+}
+
+.popular-date {
+    font-size: 10px;
+    color: rgb(26, 26, 26, 0.6);
+}
+
+.popular-title {
+    
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: auto;
+    /* Обрезаем длинные заголовки */
+    
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Отобразить 2 строки */
+    overflow: hidden;
+}
+
+.popular-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #888;
+}
+
+.popular-views {
+    margin-right: 10px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- Ближайшие матчи --- */
+.matches-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.match-item {
+    margin: 0 0 20px 0;
+    aspect-ratio: 3 / 1;
+
+    transition: all 0.3s ease;
+}
+
+.match-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background-color: #d3d3d3;
+    color: #1a1a1a;
+    border-radius: 12px;
+    padding: 16px;
+
+    transition: all 0.3s ease;
+}
+
+.match-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.match-wrapper:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.02);
+    
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+.match-teams {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.match-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: flex-start;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.team-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.team {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
+
+.team-emblem {
+    width: 70px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+}
+
+.team:first-child {
+    text-align: right;
+}
+
+.team:last-child {
+    text-align: left;
+}
+
+.vs-wrapper {
+    display: flex;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    max-height: max-content;
+    align-items: center;
+    /* background-color: rgb(26, 26, 26, 0.5); */
+}
+
+.vs {
+    color: #380f17;
+    font-size: 20px;
+    font-weight: 600;
+    text-shadow: 0 0 4px #ff3b61, 0 0 10px #ff3b61, 0 0 20px #380f17;
+}
+
+.match-score {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 4px 0 2px;
+}
+
+.match-date {
+    text-align: center;
+    font-size: 13px;
+    flex: 1;
+}
+
+.match-icon-wrapper {
+    color: #1a1a1a;
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ (мобильные)
+   ============================================ */
+@media (max-width: 768px) {
+    .news-page-sidebar {
+        display: none;   /* скрываем сайдбар на мобилках */
+    }
+
+    /* остальные медиа-правила уже были */
+}

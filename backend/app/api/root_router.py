@@ -26,6 +26,11 @@ from .admin_router.match_set import router as match_set_router
 from .public_router.match_set import router as public_match_set_router
 from .admin_router.standings import router as standings_router
 from .public_router.standings import router as public_standings_router
+from .admin_router.categories import router as admin_categories_router
+from .public_router.categories import router as public_categories_router
+from .public_router.news import router as public_news_router
+from .public_router.player_achievements import router as pa
+from .admin_router.player_achievements import router as admin_pa
 
 def make_root_router() -> APIRouter:
     router = APIRouter()
@@ -63,5 +68,10 @@ def make_root_router() -> APIRouter:
     router.include_router(public_match_set_router, tags=["match_set"])
     router.include_router(standings_router, tags=["standings"])
     router.include_router(public_standings_router, tags=["standings"])
+    router.include_router(admin_categories_router, tags=["categories"])
+    router.include_router(public_categories_router, tags=["categories"])
+    router.include_router(public_news_router, tags=["news"])
+    router.include_router(pa, tags=["player_achievements"])
+    router.include_router(admin_pa, tags=["player_achievements"])
 
     return router

@@ -12,8 +12,14 @@ async def create_tournament_team(db: SessionDep, tournament_team: TournamentTeam
     tournament_team = TournamentTeam(
         name=tournament_team.name,
         season_id=tournament_team.season_id,
-        league_name=tournament_team.league_name,
-        group_name=tournament_team.group_name,
+        avatar_media_id=tournament_team.avatar_media_id,
+        standings_id=tournament_team.standings_id,
+        sets_won=tournament_team.sets_won,
+        sets_lost=tournament_team.sets_lost,
+        matches_played=tournament_team.matches_played,
+        points=tournament_team.points,
+        wins=tournament_team.wins,
+        losses=tournament_team.losses,
     )
     
     db.add(tournament_team)

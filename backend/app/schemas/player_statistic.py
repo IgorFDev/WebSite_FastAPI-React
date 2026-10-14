@@ -1,3 +1,4 @@
+from pickletools import int4
 from pydantic import BaseModel, field_validator
 from .season import SeasonMiniResponse
 
@@ -12,12 +13,16 @@ class PlayerStatisticCreate(BaseModel):
     aces: int
     errors: int
 
-class PlayerStatisticResponse(BaseModel):
+
+class ShortPlayerStatisticResponse(BaseModel):
     id: int
-    player_id: int
     matches_played: int
-    sets_played: int
     total_points: int
+
+
+class PlayerStatisticResponse(ShortPlayerStatisticResponse):
+    player_id: int
+    sets_played: int
     blocks: int
     attacks: int
     aces: int

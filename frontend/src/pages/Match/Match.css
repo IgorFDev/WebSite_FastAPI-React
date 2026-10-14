@@ -1,0 +1,205 @@
+.match-title, .match-results {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.match-team-name {
+    width: 35%;
+    text-transform: capitalize;
+    display: flex;
+}
+
+.club-team {
+    justify-content: flex-end;
+}
+
+.opponent-team {
+    justify-content: flex-start;
+}
+
+.match-vs {
+    font-size: 96px;
+    font-weight: 600;
+    color: #F3F3F3;
+}
+
+.match-results {
+    background-color: #222222;
+    border: 1.5px solid #F3F3F3;
+    padding: 25px 35px;
+    border-radius: 20px;
+    width: fit-content;
+    margin: 0 auto;
+    gap: 60px;
+}
+
+.match-results-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+.match-score {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12.5px;
+}
+
+.match-logo {
+    width: 100px;
+    height: 100px; 
+}
+
+.match-result-table {
+    margin-top: 80px;
+}
+
+.match-address-map {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.match-address-title {
+    font-size: 40px;
+    font-weight: 500;
+    color: #F3F3F3;
+    margin-bottom: 20px;
+    margin-right: auto;
+}
+
+.map-container {
+    width: 100%;
+    max-height: 550px;
+    aspect-ratio: 1 / 0.7;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid #F3F3F3;
+}
+
+.map-container iframe {
+    display: block;
+}
+
+.match-table {
+    width: 100%;
+    border-collapse: separate;
+    border: 3px solid #F3F3F3;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.match-table thead {
+    background-color: #660708;
+}
+
+.match-table th {
+    padding: 14px 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+    color: #F3F3F3;
+    border-bottom: 1px solid #F3F3F3;
+}
+
+.match-table th:not(:last-child) {
+    border-right: 1px solid #F3F3F3;
+}
+
+.match-table td {
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    border-bottom: 1px solid #F3F3F3;
+}
+
+.match-table td:not(:last-child) {
+    border-right: 1px solid #F3F3F3;
+}
+
+/* Первая строка после шапки */
+.match-table tbody tr:first-child {
+    background-color: #2A2A2A;
+}
+
+/* Вторая строка после шапки */
+.match-table tbody tr:nth-child(2) {
+    background-color: #262626;
+}
+
+.match-table .team-name {
+    width: 20%;
+    font-weight: bold;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    font-size: 22px;
+    text-overflow: ellipsis;
+}
+
+.match-table .total-score {
+    width: 20%;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Убираем нижнюю границу у последней строки */
+.match-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Адаптивность для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .match-table {
+        font-size: 12px;
+        border-radius: 12px;
+    }
+    
+    .match-table th,
+    .match-table td {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+    
+    .match-table .team-name {
+        min-width: 80px;
+        font-size: 12px;
+        padding-left: 15px;
+    }
+    
+    .match-table .total-score {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .match-table {
+        border-radius: 10px;
+        border-width: 2px;
+    }
+    
+    .match-table th,
+    .match-table td {
+        padding: 8px 8px;
+        font-size: 10px;
+    }
+    
+    .match-table .team-name {
+        min-width: 60px;
+        font-size: 10px;
+        padding-left: 10px;
+    }
+    
+    .match-table .total-score {
+        font-size: 12px;
+    }
+}

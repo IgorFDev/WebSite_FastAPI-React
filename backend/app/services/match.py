@@ -63,11 +63,29 @@ async def get_matches(db: SessionDep) -> list[MatchResponse]:
     """
     Получение списка всех матчей
     """
-    matches = await db.execute(select(Match).order_by(Match.created_at.desc()))
+    matches = await db.execute(select(Match).order_by(Match.match_datetime.asc()))
     matches = matches.scalars().all()
     
     return matches
 
+
+async def get_matches_by_team(db: SessionDep, team_slug: str) -> list[MatchResponse]:
+    """
+    Получение списка матчей по команде клуба
+    """
+    team = await db.execute(select(ClubTeam).where(ClubTeam.slug == team_slug))
+    team = team.scalar()
+    
+    if not team:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Команда не найдена"
+        )
+    
+    matches = await db.execute(select(Match).where(Match.club_team_id == team.id))
+    matches = matches.scalars().all()
+    
+    return matches
 
 async def get_match_by_slug(db: SessionDep, match_slug: str) -> MatchResponse:
 

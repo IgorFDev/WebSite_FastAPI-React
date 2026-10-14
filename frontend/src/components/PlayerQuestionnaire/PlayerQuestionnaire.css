@@ -1,0 +1,138 @@
+.player-questionnaire {
+    background-color: #F2F2F2;
+    border-radius: 25px;
+    overflow: hidden;
+    display: flex;
+    height: 100%;
+    border: 3px solid #fff;
+}
+
+.player-questionnaire-wrapper {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.player-questionnaire-profile-wrapper {
+    width: 70%;
+    flex: 0 0 auto;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+
+.player-questionnaire-number {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+    font-size: 60px;
+    font-weight: bold;
+    color: rgb(225, 0, 45);
+    z-index: 2;
+}
+
+.player-questionnaire-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.player-questionnaire-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.player-questionnaire-info-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #FCFCFC;
+    color: white;
+}
+
+.player-questionnaire-info-block {
+    flex: 2;
+    background-color: #660708;
+    padding: 20px;
+}
+
+.player-questionnaire-fullname {
+    margin-bottom: 10px;
+}
+
+.player-questionnaire-lastname {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.player-questionnaire-firstname {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.player-questionnaire-position {
+    font-size: 18px;
+    opacity: 0.9;
+    color: #ff0033;
+}
+
+.player-questionnaire-stat-block {
+    display: flex;
+    gap: 30px;
+    flex: 0.5;
+    background-color: #450A0A;
+    padding: 12px 38px;
+    align-items: center;
+}
+
+.player-questionnaire-stat {
+    text-align: center;
+}
+
+.player-questionnaire-stat.points {
+    margin-left: auto;
+}
+
+.player-questionnaire-stat > div:first-child {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.player-questionnaire-inscription {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+.player-questionnaire-achievements-block {
+    flex: 3;
+    color: #1a1a1a;
+    padding: 20px;
+}
+
+.player-questionnaire-achievements-inscription {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.player-questionnaire-achievements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+}
+
+.player-achievement {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.achievement-text {
+    opacity: 0.9;
+}

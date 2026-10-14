@@ -1,0 +1,157 @@
+.news-item-page {
+  padding: 20px 0;
+}
+
+.news-item-meta {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.news-views-count {
+  font-size: 16px;
+  color: #d3d3d3;
+  font-weight: 300;
+}
+
+.news-item-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.news-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  max-width: 90%;
+  border: 4px solid rgba(133, 133, 133, 0.7);
+  aspect-ratio: 1250 / 834;
+
+  transition: all 0.3s ease;
+}
+
+.news-item-image:hover {
+  box-shadow: 0 4px 12px rgba(135, 135, 135, 0.9);
+}
+
+.news-item-content-wrapper {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+  background: rgba(133, 133, 133, 0.3);
+  border-radius: 12px;
+}
+
+.news-item-content {
+  line-height: 1.8;
+  color: #e0e0e0;
+}
+
+.news-item-content h1 {
+  font-size: 34px;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.news-item-content h2 {
+  font-size: 28px;
+  font-weight: 500;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.news-item-content h3 {
+  font-size: 22px;
+  font-weight: 500;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.news-item-content p {
+  padding-bottom: 12px;
+  font-weight: 300;
+  text-align: justify;
+  font-size: 18px;
+}
+
+.news-item-content blockquote p,
+.news-item-content li p {
+  padding: unset;
+}
+
+.news-item-content ul {
+  list-style-type: disc;
+  padding-left: 2em;
+  margin-bottom: 12px;
+}
+
+.news-item-content ol {
+  list-style-type: decimal;
+  padding-left: 2em;
+  margin-bottom: 12px;
+}
+
+.news-item-content li {
+  margin-bottom: 6px;
+}
+
+.news-item-content strong {
+  font-weight: bold;
+}
+
+.news-item-content em {
+  font-style: italic;
+}
+
+.news-item-content a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.news-item-content a:hover {
+  color: #0056b3;
+}
+
+.article-content pre {
+    padding: 20px 24px;
+
+    background: #242424;
+    border-radius: 10px;
+
+    overflow-x: auto;
+
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    line-height: 1.6;
+
+    border-left: 4px solid #DC1619;
+
+    box-sizing: border-box;
+}
+
+.article-content pre code {
+    display: block;
+
+    padding: 0;
+
+    background: transparent;
+    border: none;
+
+    color: #F2F2F2;
+
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+
+    white-space: pre;
+}
+
+.news-item-content hr {
+  margin-bottom: 12px;
+}

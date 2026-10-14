@@ -1,0 +1,4 @@
+.match-wrapper.disabled {
+  opacity: 0.5;
+  /* или любые другие стили */
+}

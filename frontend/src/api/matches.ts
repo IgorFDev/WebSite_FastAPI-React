@@ -12,6 +12,17 @@ export async function getMatches() {
     return response.json()
 }
 
+
+export async function getMatchesByTeam(teamSlug: string) {
+    const response = await fetch(`${API_URL}/match/team/${teamSlug}`)
+
+    if (!response.ok) {
+        throw new Error("Ошибка загрузки матчей")
+    }
+    
+    return response.json()
+}
+
 export async function getMatchbySlug(slug: string) {
     const response = await fetch(`${API_URL}/match/${slug}`)
 

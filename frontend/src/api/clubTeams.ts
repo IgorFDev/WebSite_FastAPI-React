@@ -12,6 +12,16 @@ export async function getClubTeams() {
     return response.json()
 }
 
+export async function getPlayersByClubTeam(slug: string) {
+    const response = await fetch(`${API_URL}${slug}`)
+
+    if (!response.ok) {
+        throw new Error("Ошибка загрузки команды клуба")
+    }
+
+    return response.json()
+}
+
 export async function createClubTeam(data: any) {
     const response = await api.post("/club-team", data)
     return response.data

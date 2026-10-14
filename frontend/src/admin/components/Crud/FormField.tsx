@@ -54,6 +54,14 @@ export const fieldsSeason = [
         type: "text",
         required: true
     },
+    
+    {
+        name: "start_year",
+        label: "Год начала",
+        type: "number",
+        required: true
+    },
+
     {
         name: "is_current",
         label: "Текущий сезон?",
@@ -143,7 +151,10 @@ export function getPlayerFields(
     ]
 }
 
-export const newsFields = [
+export function newsFields(
+    categoryOptions: any[]
+) {
+    return [
     {
         name: "title",
         label: "Название",
@@ -151,9 +162,16 @@ export const newsFields = [
         required: true
     },
     {
+        name: "categories",
+        label: "Выберите категории",
+        type: "multiselect",
+        options: categoryOptions,
+        required: false
+    },
+    {
         name: "content",
         label: "Содержание",
-        type: "textarea",
+        type: "tiptap",
         required: true
     },
     {
@@ -162,8 +180,40 @@ export const newsFields = [
         type: "media",
         required: true
     }
-]
+]}
 
+
+export function newsUpdateFields(
+    categoryOptions: any[]
+) {
+    return [
+        {
+            name: "title",
+            label: "Название",
+            type: "text",
+            required: true
+        },
+        {
+            name: "categories",
+            label: "Выберите категории",
+            type: "multiselect",
+            options: categoryOptions,
+            required: false
+        },
+        {
+            name: "content",
+            label: "Содержание",
+            type: "tiptap",
+            required: true
+        },
+        {
+            name: "cover",
+            label: "Фото",
+            type: "media",
+            required: true
+        }
+    ]
+}
 
 export function getMatchFields(
     clubTeamOptions: any[],

@@ -69,7 +69,7 @@
     margin-top: 1rem;
 }
 
-.form-submit-button {
+.form-submit-button:not(:disabled) {
     border: none;
 
     padding: 1.2rem 2rem;
@@ -87,11 +87,11 @@
     transition: 0.2s;
 }
 
-.form-submit-button:hover {
+.form-submit-button:hover:not(:disabled) {
     background: #002d87;
 }
 
-.form-submit-button:active {
+.form-submit-button:active:not(:disabled) {
     transform: translateY(1px);
 }
 

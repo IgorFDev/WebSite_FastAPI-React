@@ -19,7 +19,7 @@ function PlayerPage({ player }: any) {
         return `${day}.${month}.${year}`;
     };
     
-    const fullName = `${player.first_name || ''} ${player.last_name || ''}`.trim();
+    const fullName = `${player.last_name || ''} ${player.first_name || ''}`.trim();
     const position = player.position || 'Игрок';
     const shirtNumber = player.number ?? 0;
     const heightCm = player.height ? `${player.height}` : '—';

@@ -100,6 +100,7 @@ function SeasonsPage() {
                         <Link to={`${seasonsItem.name}`}>
                             <div className="seasons-item">
                                 <h2>{seasonsItem.name}</h2>
+                                <p>Года сезона: {seasonsItem.start_year}/{seasonsItem.end_year}</p>
                                 <p>Создан: {formatDate(seasonsItem.created_at)}</p>
                             </div>
                         </Link>

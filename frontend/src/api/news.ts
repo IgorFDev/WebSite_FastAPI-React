@@ -12,8 +12,8 @@ export async function getNews() {
     return response.json()
 }
 
-export async function getNewsById(id: number) {
-    const response = await fetch(`${API_URL}/news/${id}`)
+export async function getNewsBySlug(slug: string) {
+    const response = await fetch(`${API_URL}/news/${slug}`)
     
     if (!response.ok) {
         throw new Error("Новость не найдена")
@@ -22,8 +22,18 @@ export async function getNewsById(id: number) {
     return response.json()
 }
 
+export async function getMostViewedNews() {
+    const response = await fetch(`${API_URL}/news/most-viewed`)
+    
+    if (!response.ok) {
+        throw new Error("Ошибка загрузки новостей")
+    }
+    
+    return response.json()
+}
+
 export async function createNews(data: any) {
-    const response = await api.post("/news", data)
+    const response = await api.post("/news/", data)
     return response.data
 }
 
@@ -43,6 +53,19 @@ export async function deleteNews(id: number) {
 }
 
 export async function publishNews(id: number) {
-    const response = await api.post(`/news/${id}/publish`)
+    const response = await api.put(`/news/${id}/publish`)
     return response.data
+}
+
+export async function incrementNewsView(newsId: number) {
+    const response = await fetch(`${API_URL}/news/${newsId}/view`, {
+        method: 'POST',
+        credentials: 'include' // Важно для работы с cookies
+    })
+    
+    if (!response.ok) {
+        throw new Error("Ошибка при увеличении просмотров")
+    }
+    
+    return response.json()
 }

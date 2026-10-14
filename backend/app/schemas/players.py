@@ -2,8 +2,13 @@ from pydantic import BaseModel
 from .media import MediaResponse
 from datetime import date
 from .player_gallery import PlayerGalleryResponse
-from .player_statistic import PlayerStatisticResponse
-from .club_team import ClubTeamResponse
+from .player_statistic import PlayerStatisticResponse, ShortPlayerStatisticResponse
+from .player_achievements import PlayerAchievementsResponse
+
+class ClubTeamShortResponse(BaseModel):
+    id: int
+    name: str
+    league_name: str
 
 class PlayersResponse(BaseModel):
     id: int
@@ -11,8 +16,11 @@ class PlayersResponse(BaseModel):
     last_name: str
     number: int
     slug: str
+    position: str
     
+    statistics: list[ShortPlayerStatisticResponse]
     avatar: MediaResponse
+    achievements: list[PlayerAchievementsResponse]
 
     class Config:
         from_attributes = True
@@ -47,7 +55,6 @@ class PlayerUpdate(BaseModel):
     
 
 class PlayerResponse(PlayersResponse):
-    position: str
     height: int
     weight: int
     birth_date: date
@@ -55,7 +62,7 @@ class PlayerResponse(PlayersResponse):
     age: int
     is_current: bool
 
-    club_team: ClubTeamResponse
+    club_team: ClubTeamShortResponse
     background: MediaResponse
     statistics: list[PlayerStatisticResponse]
     gallery_items: list[PlayerGalleryResponse]

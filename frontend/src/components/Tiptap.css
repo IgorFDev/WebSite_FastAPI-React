@@ -1,0 +1,84 @@
+.tiptap-container {
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tiptap-toolbar {
+  display: flex;
+  column-gap: 8px;
+  row-gap: 12px;
+  padding: 8px;
+  border-bottom: 1px solid #d1d5db;
+  background: #f5f5f5;
+  flex-wrap: wrap;
+}
+
+.tiptap-toolbar button {
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tiptap-toolbar button:hover {
+  background: #e0e0e0;
+}
+
+.tiptap-toolbar button.is-active {
+  background: #e1002d;
+  color: white;
+  border-color: #e1002d;
+}
+
+.tiptap-editor {
+  padding: 16px;
+  min-height: 200px;
+  outline: none;
+}
+
+.tiptap-editor:focus {
+  outline: none;
+}
+
+/* Стили для отображения контента */
+
+.tiptap-editor ul {
+  list-style-type: disc;
+  padding-left: 2em;
+  
+  color: #1a1a1a;
+}
+
+.tiptap-editor ol {
+  list-style-type: decimal;
+  padding-left: 2em;
+  color: #1a1a1a;
+}
+
+.tiptap-editor p {
+  margin: 1em 0;
+  color: #1a1a1a;
+}
+
+.tiptap-editor strong {
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.tiptap-editor em {
+  font-style: italic;
+  color: #1a1a1a;
+}
+
+.tiptap-editor pre, code {
+  font-family: monospace;
+  background-color: rgba(46, 46, 46, 0.9);
+  padding: 14px 12px;
+  border-radius: 14px;
+  filter: blur(0.2px);
+  font-size: 16px;
+  color: #d3d3d3;
+}

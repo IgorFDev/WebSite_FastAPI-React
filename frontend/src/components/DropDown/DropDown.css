@@ -1,0 +1,110 @@
+/* ===== Переменные цветов (замените на свои) ===== */
+:root {
+  --dropdown-bg: #ffffff;
+  --dropdown-text: #1a1a1a;
+  --dropdown-hover-bg: #f0f0f0;
+  --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --dropdown-border-radius: 12px;
+  --dropdown-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --primary-color: #2c3e50;    /* цвет заголовка, можно сделать акцентным */
+  --divider-color: #eaeaea;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  /* padding: 8px 0; */
+}
+
+/* Заголовок (например, "Команды") */
+.dropdown-title {
+  transition: background var(--dropdown-transition);
+  /* transition: all 0.5s ease; */ /* Суммируется с эффектом в header.css, из-за чего hover эффекты действуют по разному, где-то 1 секунду, где-то 0.5 секунды*/
+}
+
+.dropdown-title:hover {
+  color: #ff0000
+}
+
+/* Контейнер выпадающего меню (для анимации) */
+.dropdown-menu-wrapper {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--dropdown-transition),
+              transform var(--dropdown-transition),
+              visibility 0s var(--dropdown-transition);
+  z-index: 1000;
+}
+
+.dropdown-menu-wrapper.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+/* Само меню (карточка) */
+.dropdown-menu {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  background: var(--dropdown-bg);
+  border-radius: var(--dropdown-border-radius);
+  box-shadow: var(--dropdown-shadow);
+  overflow: hidden;
+  backdrop-filter: blur(2px); /* лёгкий эффект стекла */
+}
+
+/* Пункты меню */
+.dropdown-menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 12px 24px;
+  color: var(--dropdown-text);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background var(--dropdown-transition), padding-left 0.2s;
+  border-left: 3px solid transparent;
+}
+
+/* Разделители между пунктами (кроме последнего) */
+.dropdown-menu li:not(:last-child) a {
+  border-bottom: 1px solid var(--divider-color);
+}
+
+/* Ховер эффект */
+.dropdown-menu li a:hover {
+  background: var(--dropdown-hover-bg);
+  padding-left: 28px;
+  border-left-color: var(--primary-color);
+}
+
+/* Адаптив для маленьких экранов (меню будет выезжать вниз) */
+@media (max-width: 768px) {
+  .dropdown-menu-wrapper {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: none;
+    margin-top: 8px;
+  }
+  .dropdown-menu-wrapper.open {
+    transform: none;
+  }
+  .dropdown-menu {
+    box-shadow: none;
+    border: 1px solid var(--divider-color);
+  }
+}

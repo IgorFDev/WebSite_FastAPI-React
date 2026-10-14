@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from db.session import SessionDep
 from schemas.standings import StandingsResponse
-from services.standings import get_standings_by_id, get_standings
+from services.standings import get_standings_by_id, get_standings, get_standings_current_season
 
 router = APIRouter(prefix="/api/v1/standings")
 
@@ -13,6 +13,15 @@ async def get_standings_endpoint(
     Получение всех данных таблицы standings
     """
     return await get_standings(db)
+
+@router.get("/current-season", response_model=list[StandingsResponse])
+async def get_standings_current_season_endpoint(
+    db: SessionDep
+):
+    """
+    Получение всех данных таблицы standings
+    """
+    return await get_standings_current_season(db)
 
 
 @router.get("/{id}", response_model=StandingsResponse)

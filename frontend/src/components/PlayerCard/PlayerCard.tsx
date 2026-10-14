@@ -3,7 +3,7 @@ import "./PlayerCard.css"
 
 function PlayerCard({ player }: any) {
     return (
-        <Link to={`/players/${player.slug}`}
+        <Link to={`/player/${player.slug}`}
         className="player-card-link">
 
             <div className="player-card">
@@ -11,10 +11,7 @@ function PlayerCard({ player }: any) {
                 <img src={`http://localhost:8000${player.avatar.url}`}
                 alt={player.first_name}
                 className='player-image'/>
-
-                <h4>
-                    {player.position}
-                </h4>
+                
                 <div className='player-info'>
                     {player.last_name} {player.first_name}
                 </div>

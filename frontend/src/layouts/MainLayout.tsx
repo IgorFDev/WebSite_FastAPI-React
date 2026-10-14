@@ -5,13 +5,15 @@ import Footer from "../components/Footer/Footer"
 
 function MainLayout() {
   return (
-    <>
+    <div className="body">
       <Header />
-      <main>
-        <Outlet />
-      </main>
+      <div className="content">
+        <main>
+          <Outlet />
+        </main>
+      </div>
       <Footer />
-    </>
+    </div>
   )
 }
 
